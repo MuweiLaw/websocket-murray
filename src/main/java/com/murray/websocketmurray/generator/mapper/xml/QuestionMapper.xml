@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dc.codelegend.generator.mapper.QuestionIMapper">
+    <resultMap id="BaseResultMap" type="com.dc.codelegend.domain.Question">
+        <id column="question_id" jdbcType="INTEGER" property="questionId"/>
+        <result column="question_category_id" jdbcType="SMALLINT" property="questionCategoryId"/>
+        <result column="question" jdbcType="LONGVARCHAR" property="question"/>
+        <result column="answer_a" jdbcType="VARCHAR" property="answerA"/>
+        <result column="answer_b" jdbcType="VARCHAR" property="answerB"/>
+        <result column="answer_c" jdbcType="VARCHAR" property="answerC"/>
+        <result column="answer_d" jdbcType="VARCHAR" property="answerD"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="is_easy" jdbcType="TINYINT" property="isEasy"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dc.codelegend.domain.Question">
+        <result column="question" jdbcType="LONGVARCHAR" property="question"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    `question_id`, `question_category_id`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, 
+    `answer`, `is_easy`, `created_at`, `updated_at`
+  </sql>
+    <sql id="Blob_Column_List">
+    `question`
+  </sql>
+    <select id="selectByExampleWithBLOBs" parameterType="com.dc.codelegend.domain.QuestionCriteria"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from sdw_question
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" parameterType="com.dc.codelegend.domain.QuestionCriteria" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from sdw_question
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from sdw_question
+        where `question_id` = #{questionId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByQuestion" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select *
+  from sdw_question
+  where `question` = #{question,jdbcType=LONGVARCHAR}
+</select>
+    <select id="findPage" resultMap="BaseResultMap" parameterType="map">
+        select * from sdw_question
+        <where>
+            question_id like '%${page.questionId}%'
+            <if test="page.question != null">
+                and question like '%${page.question}%'
+            </if>
+            <if test="page.questionCategoryId != null">
+                and question_category_id like '%${page.questionCategoryId}%'
+            </if>
+            <if test="page.answerA != null">
+                and answer_a like '%${page.answerA}%'
+            </if>
+            <if test="page.answerB != null">
+                and answer_b like '%${page.answerB}%'
+            </if>
+            <if test="page.answerC != null">
+                and answer_c like '%${page.answerC}%'
+            </if>
+            <if test="page.answerD != null">
+                and answer_d like '%${page.answerD}%'
+            </if>
+            <if test="page.answerA != null">
+                and answer like '%${page.answer}%'
+            </if>
+            <if test="page.isEasy != null">
+                and is_easy like '%${page.isEasy}%'
+            </if>
+        </where>
+        limit ${page.limit} OFFSET ${page.offset}
+    </select>
+    <select id="countByFindPage" resultType="java.lang.Long" parameterType="map">
+        select count(*) from sdw_question
+        <where>
+            question_id like '%${page.questionId}%'
+            <if test="page.question != null">
+                and question like '%${page.question}%'
+            </if>
+            <if test="page.questionCategoryId != null">
+                and question_category_id like '%${page.questionCategoryId}%'
+            </if>
+            <if test="page.answerA != null">
+                and answer_a like '%${page.answerA}%'
+            </if>
+            <if test="page.answerB != null">
+                and answer_b like '%${page.answerB}%'
+            </if>
+            <if test="page.answerC != null">
+                and answer_c like '%${page.answerC}%'
+            </if>
+            <if test="page.answerD != null">
+                and answer_d like '%${page.answerD}%'
+            </if>
+            <if test="page.answerA != null">
+                and answer like '%${page.answer}%'
+            </if>
+            <if test="page.isEasy != null">
+                and is_easy like '%${page.isEasy}%'
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sdw_question
+    where `question_id` = #{questionId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.dc.codelegend.domain.Question">
+    insert into sdw_question (`question_id`, `question_category_id`, 
+      `answer_a`, `answer_b`, `answer_c`, 
+      `answer_d`, `answer`, `is_easy`, 
+      `created_at`, `updated_at`, `question`
+      )
+    values (#{questionId,jdbcType=INTEGER}, #{questionCategoryId,jdbcType=SMALLINT}, 
+      #{answerA,jdbcType=VARCHAR}, #{answerB,jdbcType=VARCHAR}, #{answerC,jdbcType=VARCHAR}, 
+      #{answerD,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{isEasy,jdbcType=TINYINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{question,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.dc.codelegend.domain.Question">
+        insert into sdw_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="questionId != null">
+                `question_id`,
+            </if>
+            <if test="questionCategoryId != null">
+                `question_category_id`,
+            </if>
+            <if test="answerA != null">
+                `answer_a`,
+            </if>
+            <if test="answerB != null">
+                `answer_b`,
+            </if>
+            <if test="answerC != null">
+                `answer_c`,
+            </if>
+            <if test="answerD != null">
+                `answer_d`,
+            </if>
+            <if test="answer != null">
+                `answer`,
+            </if>
+            <if test="isEasy != null">
+                `is_easy`,
+            </if>
+            <if test="createdAt != null">
+                `created_at`,
+            </if>
+            <if test="updatedAt != null">
+                `updated_at`,
+            </if>
+            <if test="question != null">
+                `question`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="questionId != null">
+                #{questionId,jdbcType=INTEGER},
+            </if>
+            <if test="questionCategoryId != null">
+                #{questionCategoryId,jdbcType=SMALLINT},
+            </if>
+            <if test="answerA != null">
+                #{answerA,jdbcType=VARCHAR},
+            </if>
+            <if test="answerB != null">
+                #{answerB,jdbcType=VARCHAR},
+            </if>
+            <if test="answerC != null">
+                #{answerC,jdbcType=VARCHAR},
+            </if>
+            <if test="answerD != null">
+                #{answerD,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="isEasy != null">
+                #{isEasy,jdbcType=TINYINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into sdw_question (`question_id`, `question_category_id`,
+        `answer_a`, `answer_b`, `answer_c`,
+        `answer_d`, `answer`, `is_easy`,
+        `created_at`, `updated_at`, `question`
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.questionId,jdbcType=INTEGER}, #{item.questionCategoryId,jdbcType=SMALLINT},
+            #{item.answerA,jdbcType=VARCHAR}, #{item.answerB,jdbcType=VARCHAR}, #{item.answerC,jdbcType=VARCHAR},
+            #{item.answerD,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR}, #{item.isEasy,jdbcType=TINYINT},
+            #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP},
+            #{item.question,jdbcType=LONGVARCHAR}
+            )
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" parameterType="java.util.List">
+        insert into sdw_question
+        (`question_id`, `question_category_id`, `answer_a`, `answer_b`, `answer_c`, `answer_d`,
+        `answer`, `is_easy`, `created_at`, `updated_at`, `question`)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.questionId != null">
+                    #{item.questionId,jdbcType=INTEGER},
+                </if>
+                <if test="item.questionId == null">
+                    NULL,
+                </if>
+                <if test="item.questionCategoryId != null">
+                    #{item.questionCategoryId,jdbcType=SMALLINT},
+                </if>
+                <if test="item.questionCategoryId == null">
+                    NULL,
+                </if>
+                <if test="item.answerA != null">
+                    #{item.answerA,jdbcType=VARCHAR},
+                </if>
+                <if test="item.answerA == null">
+                    NULL,
+                </if>
+                <if test="item.answerB != null">
+                    #{item.answerB,jdbcType=VARCHAR},
+                </if>
+                <if test="item.answerB == null">
+                    NULL,
+                </if>
+                <if test="item.answerC != null">
+                    #{item.answerC,jdbcType=VARCHAR},
+                </if>
+                <if test="item.answerC == null">
+                    NULL,
+                </if>
+                <if test="item.answerD != null">
+                    #{item.answerD,jdbcType=VARCHAR},
+                </if>
+                <if test="item.answerD == null">
+                    NULL,
+                </if>
+                <if test="item.answer != null">
+                    #{item.answer,jdbcType=VARCHAR},
+                </if>
+                <if test="item.answer == null">
+                    NULL,
+                </if>
+                <if test="item.isEasy != null">
+                    #{item.isEasy,jdbcType=TINYINT},
+                </if>
+                <if test="item.isEasy == null">
+                    NULL,
+                </if>
+                <if test="item.createdAt != null">
+                    #{item.createdAt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createdAt == null">
+                    NULL,
+                </if>
+                <if test="item.updatedAt != null">
+                    #{item.updatedAt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updatedAt == null">
+                    NULL,
+                </if>
+                <if test="item.question != null">
+                    #{item.question,jdbcType=LONGVARCHAR},
+                </if>
+                <if test="item.question == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="countByExample" parameterType="com.dc.codelegend.domain.QuestionCriteria" resultType="java.lang.Long">
+        select count(*) from sdw_question
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update sdw_question
+        <set>
+            <if test="record.questionId != null">
+                `question_id` = #{record.questionId,jdbcType=INTEGER},
+            </if>
+            <if test="record.questionCategoryId != null">
+                `question_category_id` = #{record.questionCategoryId,jdbcType=SMALLINT},
+            </if>
+            <if test="record.answerA != null">
+                `answer_a` = #{record.answerA,jdbcType=VARCHAR},
+            </if>
+            <if test="record.answerB != null">
+                `answer_b` = #{record.answerB,jdbcType=VARCHAR},
+            </if>
+            <if test="record.answerC != null">
+                `answer_c` = #{record.answerC,jdbcType=VARCHAR},
+            </if>
+            <if test="record.answerD != null">
+                `answer_d` = #{record.answerD,jdbcType=VARCHAR},
+            </if>
+            <if test="record.answer != null">
+                `answer` = #{record.answer,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isEasy != null">
+                `is_easy` = #{record.isEasy,jdbcType=TINYINT},
+            </if>
+            <if test="record.createdAt != null">
+                `created_at` = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                `updated_at` = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.question != null">
+                `question` = #{record.question,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update sdw_question
+        set `question_id` = #{record.questionId,jdbcType=INTEGER},
+        `question_category_id` = #{record.questionCategoryId,jdbcType=SMALLINT},
+        `answer_a` = #{record.answerA,jdbcType=VARCHAR},
+        `answer_b` = #{record.answerB,jdbcType=VARCHAR},
+        `answer_c` = #{record.answerC,jdbcType=VARCHAR},
+        `answer_d` = #{record.answerD,jdbcType=VARCHAR},
+        `answer` = #{record.answer,jdbcType=VARCHAR},
+        `is_easy` = #{record.isEasy,jdbcType=TINYINT},
+        `created_at` = #{record.createdAt,jdbcType=TIMESTAMP},
+        `updated_at` = #{record.updatedAt,jdbcType=TIMESTAMP},
+        `question` = #{record.question,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update sdw_question
+        set `question_id` = #{record.questionId,jdbcType=INTEGER},
+        `question_category_id` = #{record.questionCategoryId,jdbcType=SMALLINT},
+        `answer_a` = #{record.answerA,jdbcType=VARCHAR},
+        `answer_b` = #{record.answerB,jdbcType=VARCHAR},
+        `answer_c` = #{record.answerC,jdbcType=VARCHAR},
+        `answer_d` = #{record.answerD,jdbcType=VARCHAR},
+        `answer` = #{record.answer,jdbcType=VARCHAR},
+        `is_easy` = #{record.isEasy,jdbcType=TINYINT},
+        `created_at` = #{record.createdAt,jdbcType=TIMESTAMP},
+        `updated_at` = #{record.updatedAt,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dc.codelegend.domain.Question">
+        update sdw_question
+        <set>
+            <if test="questionCategoryId != null">
+                `question_category_id` = #{questionCategoryId,jdbcType=SMALLINT},
+            </if>
+            <if test="answerA != null">
+                `answer_a` = #{answerA,jdbcType=VARCHAR},
+            </if>
+            <if test="answerB != null">
+                `answer_b` = #{answerB,jdbcType=VARCHAR},
+            </if>
+            <if test="answerC != null">
+                `answer_c` = #{answerC,jdbcType=VARCHAR},
+            </if>
+            <if test="answerD != null">
+                `answer_d` = #{answerD,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                `answer` = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="isEasy != null">
+                `is_easy` = #{isEasy,jdbcType=TINYINT},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="question != null">
+                `question` = #{question,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where `question_id` = #{questionId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dc.codelegend.domain.Question">
+    update sdw_question
+    set `question_category_id` = #{questionCategoryId,jdbcType=SMALLINT},
+      `answer_a` = #{answerA,jdbcType=VARCHAR},
+      `answer_b` = #{answerB,jdbcType=VARCHAR},
+      `answer_c` = #{answerC,jdbcType=VARCHAR},
+      `answer_d` = #{answerD,jdbcType=VARCHAR},
+      `answer` = #{answer,jdbcType=VARCHAR},
+      `is_easy` = #{isEasy,jdbcType=TINYINT},
+      `created_at` = #{createdAt,jdbcType=TIMESTAMP},
+      `updated_at` = #{updatedAt,jdbcType=TIMESTAMP},
+      `question` = #{question,jdbcType=LONGVARCHAR}
+    where `question_id` = #{questionId,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.dc.codelegend.domain.Question">
+    update sdw_question
+    set `question_category_id` = #{questionCategoryId,jdbcType=SMALLINT},
+      `answer_a` = #{answerA,jdbcType=VARCHAR},
+      `answer_b` = #{answerB,jdbcType=VARCHAR},
+      `answer_c` = #{answerC,jdbcType=VARCHAR},
+      `answer_d` = #{answerD,jdbcType=VARCHAR},
+      `answer` = #{answer,jdbcType=VARCHAR},
+      `is_easy` = #{isEasy,jdbcType=TINYINT},
+      `created_at` = #{createdAt,jdbcType=TIMESTAMP},
+      `updated_at` = #{updatedAt,jdbcType=TIMESTAMP}
+    where `question_id` = #{questionId,jdbcType=INTEGER}
+  </update>
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        update sdw_question
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="question_category_id =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.questionCategoryId}
+                </foreach>
+            </trim>
+            <trim prefix="answer_a =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerA}
+                </foreach>
+            </trim>
+            <trim prefix="answer_b =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerB}
+                </foreach>
+            </trim>
+            <trim prefix="answer_c =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerC}
+                </foreach>
+            </trim>
+            <trim prefix="answer_d =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerD}
+                </foreach>
+            </trim>
+            <trim prefix="answer =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answer}
+                </foreach>
+            </trim>
+            <trim prefix="is_easy =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.isEasy}
+                </foreach>
+            </trim>
+            <trim prefix="created_at =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.createdAt}
+                </foreach>
+            </trim>
+            <trim prefix="updated_at =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.updatedAt}
+                </foreach>
+            </trim>
+            <trim prefix="question =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.question}
+                </foreach>
+            </trim>
+        </trim>
+        where `question_id` in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item.questionId}
+        </foreach>
+    </update>
+    <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+        update sdw_question
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="question_category_id =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.questionCategoryId != null ">
+                        when #{item.questionId} then #{item.questionCategoryId}
+                    </if>
+                    <if test="item.questionCategoryId == null ">
+                        when #{item.questionId} then sdw_question.`question_category_id`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_a =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.answerA != null ">
+                        when #{item.questionId} then #{item.answerA}
+                    </if>
+                    <if test="item.answerA == null ">
+                        when #{item.questionId} then sdw_question.`answer_a`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_b =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.answerB != null ">
+                        when #{item.questionId} then #{item.answerB}
+                    </if>
+                    <if test="item.answerB == null ">
+                        when #{item.questionId} then sdw_question.`answer_b`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_c =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.answerC != null ">
+                        when #{item.questionId} then #{item.answerC}
+                    </if>
+                    <if test="item.answerC == null ">
+                        when #{item.questionId} then sdw_question.`answer_c`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_d =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.answerD != null ">
+                        when #{item.questionId} then #{item.answerD}
+                    </if>
+                    <if test="item.answerD == null ">
+                        when #{item.questionId} then sdw_question.`answer_d`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.answer != null ">
+                        when #{item.questionId} then #{item.answer}
+                    </if>
+                    <if test="item.answer == null ">
+                        when #{item.questionId} then sdw_question.`answer`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="is_easy =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.isEasy != null ">
+                        when #{item.questionId} then #{item.isEasy}
+                    </if>
+                    <if test="item.isEasy == null ">
+                        when #{item.questionId} then sdw_question.`is_easy`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="created_at =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.createdAt != null ">
+                        when #{item.questionId} then #{item.createdAt}
+                    </if>
+                    <if test="item.createdAt == null ">
+                        when #{item.questionId} then sdw_question.`created_at`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="updated_at =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.updatedAt != null ">
+                        when #{item.questionId} then #{item.updatedAt}
+                    </if>
+                    <if test="item.updatedAt == null ">
+                        when #{item.questionId} then sdw_question.`updated_at`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="question =case question_id" suffix="end,">
+                <foreach collection="list" index="index" item="item" separator=" ">
+                    <if test="item.question != null ">
+                        when #{item.questionId} then #{item.question}
+                    </if>
+                    <if test="item.question == null ">
+                        when #{item.questionId} then sdw_question.`question`
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where `question_id` in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item.questionId}
+        </foreach>
+    </update>
+    <update id="updateBatchByExample" parameterType="map">
+        update sdw_question
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="question_category_id =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.questionCategoryId}
+                </foreach>
+            </trim>
+            <trim prefix="answer_a =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerA}
+                </foreach>
+            </trim>
+            <trim prefix="answer_b =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerB}
+                </foreach>
+            </trim>
+            <trim prefix="answer_c =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerC}
+                </foreach>
+            </trim>
+            <trim prefix="answer_d =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answerD}
+                </foreach>
+            </trim>
+            <trim prefix="answer =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.answer}
+                </foreach>
+            </trim>
+            <trim prefix="is_easy =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.isEasy}
+                </foreach>
+            </trim>
+            <trim prefix="created_at =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.createdAt}
+                </foreach>
+            </trim>
+            <trim prefix="updated_at =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.updatedAt}
+                </foreach>
+            </trim>
+            <trim prefix="question =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    when #{item.questionId} then #{item.question}
+                </foreach>
+            </trim>
+        </trim>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateBatchByExampleSelective" parameterType="map">
+        update sdw_question
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="question_category_id =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.questionCategoryId != null ">
+                        when #{item.questionId} then #{item.questionCategoryId}
+                    </if>
+                    <if test="item.questionCategoryId == null ">
+                        when #{item.questionId} then sdw_question.`question_category_id`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_a =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.answerA != null ">
+                        when #{item.questionId} then #{item.answerA}
+                    </if>
+                    <if test="item.answerA == null ">
+                        when #{item.questionId} then sdw_question.`answer_a`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_b =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.answerB != null ">
+                        when #{item.questionId} then #{item.answerB}
+                    </if>
+                    <if test="item.answerB == null ">
+                        when #{item.questionId} then sdw_question.`answer_b`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_c =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.answerC != null ">
+                        when #{item.questionId} then #{item.answerC}
+                    </if>
+                    <if test="item.answerC == null ">
+                        when #{item.questionId} then sdw_question.`answer_c`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer_d =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.answerD != null ">
+                        when #{item.questionId} then #{item.answerD}
+                    </if>
+                    <if test="item.answerD == null ">
+                        when #{item.questionId} then sdw_question.`answer_d`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="answer =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.answer != null ">
+                        when #{item.questionId} then #{item.answer}
+                    </if>
+                    <if test="item.answer == null ">
+                        when #{item.questionId} then sdw_question.`answer`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="is_easy =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.isEasy != null ">
+                        when #{item.questionId} then #{item.isEasy}
+                    </if>
+                    <if test="item.isEasy == null ">
+                        when #{item.questionId} then sdw_question.`is_easy`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="created_at =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.createdAt != null ">
+                        when #{item.questionId} then #{item.createdAt}
+                    </if>
+                    <if test="item.createdAt == null ">
+                        when #{item.questionId} then sdw_question.`created_at`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="updated_at =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.updatedAt != null ">
+                        when #{item.questionId} then #{item.updatedAt}
+                    </if>
+                    <if test="item.updatedAt == null ">
+                        when #{item.questionId} then sdw_question.`updated_at`
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="question =case question_id" suffix="end,">
+                <foreach collection="recordList" index="index" item="item" separator=" ">
+                    <if test="item.question != null ">
+                        when #{item.questionId} then #{item.question}
+                    </if>
+                    <if test="item.question == null ">
+                        when #{item.questionId} then sdw_question.`question`
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+</mapper>

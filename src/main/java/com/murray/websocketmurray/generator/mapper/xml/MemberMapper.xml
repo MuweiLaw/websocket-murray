@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.murray.websocketmurray.generator.mapper.MemberMapper">
-    <resultMap id="BaseResultMap" type="com.murray.websocketmurray.domain.Member">
-        <id column="member_id" jdbcType="INT" property="memberId"/>
+<mapper namespace="com.dc.codelegend.generator.mapper.MemberIMapper">
+    <resultMap id="BaseResultMap" type="com.dc.codelegend.domain.Member">
+        <id column="member_id" jdbcType="INTEGER" property="memberId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="md5_extend" jdbcType="VARCHAR" property="md5Extend"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -18,22 +18,22 @@
         <result column="qq" jdbcType="VARCHAR" property="qq"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="sex" jdbcType="TINYINT" property="sex"/>
-        <result column="birthday" jdbcType="DATETIME" property="birthday"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="diy_sign" jdbcType="VARCHAR" property="diySign"/>
         <result column="group_id" jdbcType="TINYINT" property="groupId"/>
         <result column="state" jdbcType="TINYINT" property="state"/>
         <result column="is_subscribe" jdbcType="TINYINT" property="isSubscribe"/>
         <result column="money" jdbcType="DECIMAL" property="money"/>
-        <result column="created_at" jdbcType="DATETIME" property="createdAt"/>
-        <result column="updated_at" jdbcType="DATETIME" property="updatedAt"/>
+        <result column="created_at" jdbcType="DATE" property="createdAt"/>
+        <result column="updated_at" jdbcType="DATE" property="updatedAt"/>
         <result column="is_insider" jdbcType="VARCHAR" property="isInsider"/>
     </resultMap>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sdw_member
-        where `member_id` = #{memberId,jdbcType=INT}
+        where `member_id` = #{memberId,jdbcType=INTEGER}
     </select>
     <!--    <select id="findPage" resultMap="BaseResultMap" parameterType="map">-->
     <!--        select-->
@@ -113,9 +113,9 @@
     <!--    </select>-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sdw_member
-    where `member_id` = #{memberId,jdbcType=INT}
+    where `member_id` = #{memberId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.murray.websocketmurray.domain.Member">
+    <insert id="insert" parameterType="com.dc.codelegend.domain.Member">
     insert into sdw_member (`member_id`, `name`, `md5_extend`,
       `password`, `pay_password`, `wechat_openid`,
       `mini_openid`, `union_id`, `nick_name`,
@@ -124,19 +124,19 @@
       `birthday`, `address`, `diy_sign`,
       `group_id`,`state`, `is_subscribe`, `money`,
       `created_at`, `updated_at`, `is_insider`)
-    values (#{memberId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{md5Extend,jdbcType=VARCHAR},
+    values (#{memberId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{md5Extend,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{wechatOpenid,jdbcType=VARCHAR},
       #{miniOpenid,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
       #{headerPic,jdbcType=VARCHAR}, #{weChatName,jdbcType=VARCHAR}, #{qqOpenid,jdbcType=VARCHAR},
       #{cellPhone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-      #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=DATETIME}, #{address,jdbcType=VARCHAR},
+      #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{address,jdbcType=VARCHAR},
       #{diySign,jdbcType=VARCHAR}, #{groupId,jdbcType=TINYINT}, #{state,jdbcType=TINYINT},
-      #{isSubscribe,jdbcType=TINYINT}, #{money,jdbcType=DECIMAL}, #{createdAt,jdbcType=DATETIME},
-      #{updatedAt,jdbcType=DATETIME},#{isInsider,jdbcType=VARCHAR})
+      #{isSubscribe,jdbcType=TINYINT}, #{money,jdbcType=DECIMAL}, #{createdAt,jdbcType=DATE},
+      #{updatedAt,jdbcType=DATE},#{isInsider,jdbcType=VARCHAR})
   </insert>
-    <update id="updateByPrimaryKey" parameterType="com.murray.websocketmurray.domain.Member">
+    <update id="updateByPrimaryKey" parameterType="com.dc.codelegend.domain.Member">
     update sdw_member
-    set `name` = #{name,jdbcType=SMALLINT},
+    set `name` = #{name,jdbcType=INTEGER},
       `md5_extend` = #{md5Extend,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
       `pay_password` = #{payPassword,jdbcType=VARCHAR},
@@ -151,16 +151,16 @@
       `qq` = #{qq,jdbcType=VARCHAR},
       `email` = #{email,jdbcType=VARCHAR},
       `sex` = #{sex,jdbcType=TINYINT},
-      `birthday` = #{birthday,jdbcType=DATETIME},
+      `birthday` = #{birthday,jdbcType=DATE},
       `address` = #{address,jdbcType=VARCHAR},
       `diy_sign` = #{diySign,jdbcType=VARCHAR},
       `group_id` = #{groupId,jdbcType=TINYINT},
       `state` = #{state,jdbcType=TINYINT},
       `is_subscribe` = #{isSubscribe,jdbcType=TINYINT},
       `money` = #{money,jdbcType=DECIMAL},
-      `created_at` = #{createdAt,jdbcType=DATETIME},
-      `updated_at` = #{updatedAt,jdbcType=DATETIME},
+      `created_at` = #{createdAt,jdbcType=DATE},
+      `updated_at` = #{updatedAt,jdbcType=DATE},
       `is_insider` = #{isInsider,jdbcType=VARCHAR}
-    where `member_id` = #{memberId,jdbcType=INT}
+    where `member_id` = #{memberId,jdbcType=INTEGER}
   </update>
 </mapper>

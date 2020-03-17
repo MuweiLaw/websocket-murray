@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dc.codelegend.generator.mapper.QuestionCategoryUpgradeIMapper">
+  <resultMap id="BaseResultMap" type="com.dc.codelegend.domain.QuestionCategoryUpgrade">
+    <id column="question_category_upgrade_id" jdbcType="INTEGER" property="questionCategoryUpgradeId" />
+    <result column="question_category_id" jdbcType="INTEGER" property="questionCategoryId" />
+    <result column="upgrade_sn" jdbcType="TINYINT" property="upgradeSn" />
+    <result column="question_prop_id" jdbcType="VARCHAR" property="questionPropId" />
+    <result column="number" jdbcType="TINYINT" property="number" />
+    <result column="gold" jdbcType="SMALLINT" property="gold" />
+    <result column="score" jdbcType="TINYINT" property="score" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    `question_category_upgrade_id`, `question_category_id`, `upgrade_sn`, `question_prop_id`, 
+    `number`, `gold`, `score`, `updated_at`, `created_at`
+  </sql>
+  <select id="selectByExample" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgradeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sdw_question_category_upgrade
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sdw_question_category_upgrade
+    where `question_category_upgrade_id` = #{questionCategoryUpgradeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sdw_question_category_upgrade
+    where `question_category_upgrade_id` = #{questionCategoryUpgradeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgrade">
+    insert into sdw_question_category_upgrade (`question_category_upgrade_id`, `question_category_id`, 
+      `upgrade_sn`, `question_prop_id`, `number`, 
+      `gold`, `score`, `updated_at`, 
+      `created_at`)
+    values (#{questionCategoryUpgradeId,jdbcType=INTEGER}, #{questionCategoryId,jdbcType=INTEGER}, 
+      #{upgradeSn,jdbcType=TINYINT}, #{questionPropId,jdbcType=VARCHAR}, #{number,jdbcType=TINYINT}, 
+      #{gold,jdbcType=SMALLINT}, #{score,jdbcType=TINYINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{createdAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgrade">
+    insert into sdw_question_category_upgrade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionCategoryUpgradeId != null">
+        `question_category_upgrade_id`,
+      </if>
+      <if test="questionCategoryId != null">
+        `question_category_id`,
+      </if>
+      <if test="upgradeSn != null">
+        `upgrade_sn`,
+      </if>
+      <if test="questionPropId != null">
+        `question_prop_id`,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="gold != null">
+        `gold`,
+      </if>
+      <if test="score != null">
+        `score`,
+      </if>
+      <if test="updatedAt != null">
+        `updated_at`,
+      </if>
+      <if test="createdAt != null">
+        `created_at`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionCategoryUpgradeId != null">
+        #{questionCategoryUpgradeId,jdbcType=INTEGER},
+      </if>
+      <if test="questionCategoryId != null">
+        #{questionCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeSn != null">
+        #{upgradeSn,jdbcType=TINYINT},
+      </if>
+      <if test="questionPropId != null">
+        #{questionPropId,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=TINYINT},
+      </if>
+      <if test="gold != null">
+        #{gold,jdbcType=SMALLINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=TINYINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into sdw_question_category_upgrade (`question_category_upgrade_id`, `question_category_id`, 
+      `upgrade_sn`, `question_prop_id`, `number`, 
+      `gold`, `score`, `updated_at`, 
+      `created_at`)
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.questionCategoryUpgradeId,jdbcType=INTEGER}, #{item.questionCategoryId,jdbcType=INTEGER}, 
+        #{item.upgradeSn,jdbcType=TINYINT}, #{item.questionPropId,jdbcType=VARCHAR}, #{item.number,jdbcType=TINYINT}, 
+        #{item.gold,jdbcType=SMALLINT}, #{item.score,jdbcType=TINYINT}, #{item.updatedAt,jdbcType=TIMESTAMP}, 
+        #{item.createdAt,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into sdw_question_category_upgrade
+    (`question_category_upgrade_id`, `question_category_id`, `upgrade_sn`, `question_prop_id`, 
+      `number`, `gold`, `score`, `updated_at`, `created_at`)
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="item.questionCategoryUpgradeId != null">
+          #{item.questionCategoryUpgradeId,jdbcType=INTEGER},
+        </if>
+        <if test="item.questionCategoryUpgradeId == null">
+          NULL,
+        </if>
+        <if test="item.questionCategoryId != null">
+          #{item.questionCategoryId,jdbcType=INTEGER},
+        </if>
+        <if test="item.questionCategoryId == null">
+          NULL,
+        </if>
+        <if test="item.upgradeSn != null">
+          #{item.upgradeSn,jdbcType=TINYINT},
+        </if>
+        <if test="item.upgradeSn == null">
+          NULL,
+        </if>
+        <if test="item.questionPropId != null">
+          #{item.questionPropId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.questionPropId == null">
+          NULL,
+        </if>
+        <if test="item.number != null">
+          #{item.number,jdbcType=TINYINT},
+        </if>
+        <if test="item.number == null">
+          NULL,
+        </if>
+        <if test="item.gold != null">
+          #{item.gold,jdbcType=SMALLINT},
+        </if>
+        <if test="item.gold == null">
+          NULL,
+        </if>
+        <if test="item.score != null">
+          #{item.score,jdbcType=TINYINT},
+        </if>
+        <if test="item.score == null">
+          NULL,
+        </if>
+        <if test="item.updatedAt != null">
+          #{item.updatedAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.updatedAt == null">
+          NULL,
+        </if>
+        <if test="item.createdAt != null">
+          #{item.createdAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createdAt == null">
+          NULL,
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <select id="countByExample" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgradeCriteria" resultType="java.lang.Long">
+    select count(*) from sdw_question_category_upgrade
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sdw_question_category_upgrade
+    <set>
+      <if test="record.questionCategoryUpgradeId != null">
+        `question_category_upgrade_id` = #{record.questionCategoryUpgradeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionCategoryId != null">
+        `question_category_id` = #{record.questionCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.upgradeSn != null">
+        `upgrade_sn` = #{record.upgradeSn,jdbcType=TINYINT},
+      </if>
+      <if test="record.questionPropId != null">
+        `question_prop_id` = #{record.questionPropId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null">
+        `number` = #{record.number,jdbcType=TINYINT},
+      </if>
+      <if test="record.gold != null">
+        `gold` = #{record.gold,jdbcType=SMALLINT},
+      </if>
+      <if test="record.score != null">
+        `score` = #{record.score,jdbcType=TINYINT},
+      </if>
+      <if test="record.updatedAt != null">
+        `updated_at` = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null">
+        `created_at` = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sdw_question_category_upgrade
+    set `question_category_upgrade_id` = #{record.questionCategoryUpgradeId,jdbcType=INTEGER},
+      `question_category_id` = #{record.questionCategoryId,jdbcType=INTEGER},
+      `upgrade_sn` = #{record.upgradeSn,jdbcType=TINYINT},
+      `question_prop_id` = #{record.questionPropId,jdbcType=VARCHAR},
+      `number` = #{record.number,jdbcType=TINYINT},
+      `gold` = #{record.gold,jdbcType=SMALLINT},
+      `score` = #{record.score,jdbcType=TINYINT},
+      `updated_at` = #{record.updatedAt,jdbcType=TIMESTAMP},
+      `created_at` = #{record.createdAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgrade">
+    update sdw_question_category_upgrade
+    <set>
+      <if test="questionCategoryId != null">
+        `question_category_id` = #{questionCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeSn != null">
+        `upgrade_sn` = #{upgradeSn,jdbcType=TINYINT},
+      </if>
+      <if test="questionPropId != null">
+        `question_prop_id` = #{questionPropId,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=TINYINT},
+      </if>
+      <if test="gold != null">
+        `gold` = #{gold,jdbcType=SMALLINT},
+      </if>
+      <if test="score != null">
+        `score` = #{score,jdbcType=TINYINT},
+      </if>
+      <if test="updatedAt != null">
+        `updated_at` = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        `created_at` = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where `question_category_upgrade_id` = #{questionCategoryUpgradeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dc.codelegend.domain.QuestionCategoryUpgrade">
+    update sdw_question_category_upgrade
+    set `question_category_id` = #{questionCategoryId,jdbcType=INTEGER},
+      `upgrade_sn` = #{upgradeSn,jdbcType=TINYINT},
+      `question_prop_id` = #{questionPropId,jdbcType=VARCHAR},
+      `number` = #{number,jdbcType=TINYINT},
+      `gold` = #{gold,jdbcType=SMALLINT},
+      `score` = #{score,jdbcType=TINYINT},
+      `updated_at` = #{updatedAt,jdbcType=TIMESTAMP},
+      `created_at` = #{createdAt,jdbcType=TIMESTAMP}
+    where `question_category_upgrade_id` = #{questionCategoryUpgradeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+    update sdw_question_category_upgrade
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="question_category_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.questionCategoryId}
+        </foreach>
+      </trim>
+      <trim prefix="upgrade_sn =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.upgradeSn}
+        </foreach>
+      </trim>
+      <trim prefix="question_prop_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.questionPropId}
+        </foreach>
+      </trim>
+      <trim prefix="number =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.number}
+        </foreach>
+      </trim>
+      <trim prefix="gold =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.gold}
+        </foreach>
+      </trim>
+      <trim prefix="score =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="updated_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.updatedAt}
+        </foreach>
+      </trim>
+      <trim prefix="created_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.createdAt}
+        </foreach>
+      </trim>
+    </trim>
+    where `question_category_upgrade_id` in 
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+       #{item.questionCategoryUpgradeId} 
+    </foreach>
+  </update>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    update sdw_question_category_upgrade
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="question_category_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.questionCategoryId != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.questionCategoryId}
+          </if>
+          <if test="item.questionCategoryId == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`question_category_id`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="upgrade_sn =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.upgradeSn != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.upgradeSn}
+          </if>
+          <if test="item.upgradeSn == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`upgrade_sn`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="question_prop_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.questionPropId != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.questionPropId}
+          </if>
+          <if test="item.questionPropId == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`question_prop_id`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="number =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.number != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.number}
+          </if>
+          <if test="item.number == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`number`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="gold =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.gold != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.gold}
+          </if>
+          <if test="item.gold == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`gold`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.score != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.score}
+          </if>
+          <if test="item.score == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`score`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="updated_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.updatedAt != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.updatedAt}
+          </if>
+          <if test="item.updatedAt == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`updated_at`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="created_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="list" index="index" item="item" separator=" ">
+          <if test="item.createdAt != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.createdAt}
+          </if>
+          <if test="item.createdAt == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`created_at`
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where `question_category_upgrade_id` in 
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+       #{item.questionCategoryUpgradeId} 
+    </foreach>
+  </update>
+  <update id="updateBatchByExample" parameterType="map">
+    update sdw_question_category_upgrade
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="question_category_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.questionCategoryId}
+        </foreach>
+      </trim>
+      <trim prefix="upgrade_sn =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.upgradeSn}
+        </foreach>
+      </trim>
+      <trim prefix="question_prop_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.questionPropId}
+        </foreach>
+      </trim>
+      <trim prefix="number =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.number}
+        </foreach>
+      </trim>
+      <trim prefix="gold =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.gold}
+        </foreach>
+      </trim>
+      <trim prefix="score =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="updated_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.updatedAt}
+        </foreach>
+      </trim>
+      <trim prefix="created_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          when  #{item.questionCategoryUpgradeId} then #{item.createdAt}
+        </foreach>
+      </trim>
+    </trim>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBatchByExampleSelective" parameterType="map">
+    update sdw_question_category_upgrade
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="question_category_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.questionCategoryId != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.questionCategoryId}
+          </if>
+          <if test="item.questionCategoryId == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`question_category_id`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="upgrade_sn =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.upgradeSn != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.upgradeSn}
+          </if>
+          <if test="item.upgradeSn == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`upgrade_sn`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="question_prop_id =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.questionPropId != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.questionPropId}
+          </if>
+          <if test="item.questionPropId == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`question_prop_id`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="number =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.number != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.number}
+          </if>
+          <if test="item.number == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`number`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="gold =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.gold != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.gold}
+          </if>
+          <if test="item.gold == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`gold`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.score != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.score}
+          </if>
+          <if test="item.score == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`score`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="updated_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.updatedAt != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.updatedAt}
+          </if>
+          <if test="item.updatedAt == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`updated_at`
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="created_at =case question_category_upgrade_id" suffix="end,">
+        <foreach collection="recordList" index="index" item="item" separator=" ">
+          <if test="item.createdAt != null ">
+            when  #{item.questionCategoryUpgradeId} then #{item.createdAt}
+          </if>
+          <if test="item.createdAt == null ">
+            when  #{item.questionCategoryUpgradeId} then sdw_question_category_upgrade.`created_at`
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
