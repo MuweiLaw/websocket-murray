@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.murray.websocketmurray.generator.mapper.QuestionOnlineMapper">
+    <resultMap id="BaseResultMap" type="com.murray.websocketmurray.domain.QuestionOnline">
+        <id column="question_online_id" jdbcType="INT" property="questionOnlineId"/>
+        <result column="name" jdbcType="INT" property="memberId"/>
+        <result column="fd" jdbcType="BIGINT" property="fd"/>
+        <result column="isOnline" jdbcType="TINYINT" property="isOnline"/>
+        <result column="isPk" jdbcType="TINYINT" property="is_pk"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="fx_member_id" jdbcType="INTEGER" property="fxMemberId"/>
+        <result column="question_dan_id" jdbcType="INTEGER" property="questionDanId"/>
+        <result column="created_at" jdbcType="DATETIME" property="createdAt"/>
+        <result column="updated_at" jdbcType="DATETIME" property="updatedAt"/>
+    </resultMap>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sdw_question_online
+        where `question_online_id` = #{questionOnlineId,jdbcType=INT}
+    </select>
+    <!--    <select id="findPage" resultMap="BaseResultMap" parameterType="map">-->
+    <!--        select-->
+    <!--      <include refid="Base_Column_List"/>-->
+    <!--      from sdw_question_category-->
+    <!--        <where>-->
+    <!--            question_category_id like '%${page.questionCategoryId}%'-->
+    <!--            <if test="page.parentId != null">-->
+    <!--                and parent_id like '%${page.parentId}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.parentIdFirst != null">-->
+    <!--                and parent_id_first like '%${page.parentIdFirst}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.title != null">-->
+    <!--                and title like '%${page.title}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.keywords != null">-->
+    <!--                and keywords like '%${page.keywords}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.categoryDesc != null">-->
+    <!--                and category_desc like '%${page.categoryDesc}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.icon != null">-->
+    <!--                and icon like '%${page.icon}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.thumb != null">-->
+    <!--                and thumb like '%${page.thumb}%'-->
+    <!--            </if>-->
+    <!--            &lt;!&ndash;<if test="page.propPic != null">&ndash;&gt;-->
+    <!--            &lt;!&ndash;and prop_pic like '%${page.propPic}%'&ndash;&gt;-->
+    <!--            &lt;!&ndash;</if>&ndash;&gt;-->
+    <!--            <if test="page.state != null">-->
+    <!--                and state like '%${page.state}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.listOrder != null">-->
+    <!--                and list_order like '%${page.listOrder}%'-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--        limit ${page.limit} OFFSET ${page.offset}-->
+    <!--    </select>-->
+    <!--    <select id="countByFindPage" resultType="java.lang.Long" parameterType="map">-->
+    <!--        select count(*) from sdw_question_category-->
+    <!--        <where>-->
+    <!--            question_category_id like '%${page.questionCategoryId}%'-->
+    <!--            <if test="page.parentId != null">-->
+    <!--                and parent_id like '%${page.parentId}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.parentIdFirst != null">-->
+    <!--                and parent_id_first like '%${page.parentIdFirst}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.title != null">-->
+    <!--                and title like '%${page.title}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.keywords != null">-->
+    <!--                and keywords like '%${page.keywords}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.categoryDesc != null">-->
+    <!--                and category_desc like '%${page.categoryDesc}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.icon != null">-->
+    <!--                and icon like '%${page.icon}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.thumb != null">-->
+    <!--                and thumb like '%${page.thumb}%'-->
+    <!--            </if>-->
+    <!--            &lt;!&ndash;<if test="page.propPic != null">&ndash;&gt;-->
+    <!--            &lt;!&ndash;and prop_pic like '%${page.propPic}%'&ndash;&gt;-->
+    <!--            &lt;!&ndash;</if>&ndash;&gt;-->
+    <!--            <if test="page.state != null">-->
+    <!--                and state like '%${page.state}%'-->
+    <!--            </if>-->
+    <!--            <if test="page.listOrder != null">-->
+    <!--                and list_order like '%${page.listOrder}%'-->
+    <!--            </if>-->
+    <!--        </where>-->
+
+    <!--    </select>-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from sdw_question_online
+    where `question_online_id` = #{questionOnlineId,jdbcType=INT}
+  </delete>
+    <insert id="insert" parameterType="com.murray.websocketmurray.domain.Member">
+    insert into sdw_question_online
+    (`question_online_id`, `member_id`, `fd`,
+      `is_online`, `is_pk`, `type`,
+      `fx_member_id`, `question_dan_id`,
+      `created_at`, `updated_at`)
+    values (#{questionOnlineId,jdbcType=INT}, #{memberId,jdbcType=INT}, #{fd,jdbcType=BIGINT},
+      #{isOnline,jdbcType=TINYINT}, #{isPk,jdbcType=TINYINT}, #{type,jdbcType=TINYINT},
+      #{fxMemberId,jdbcType=INTEGER}, #{questionDanId,jdbcType=INTEGER}, #{createdAt,jdbcType=DATETIME},
+      #{updatedAt,jdbcType=DATETIME})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.murray.websocketmurray.domain.Member">
+    update sdw_question_online
+    set `member_id` = #{memberId,jdbcType=INT},
+      `fd` = #{fd,jdbcType=BIGINT},
+      `is_online` = #{isOnline,jdbcType=TINYINT},
+      `is_pk` = #{isPk,jdbcType=TINYINT},
+      `type` = #{type,jdbcType=TINYINT},
+      `fx_member_id` = #{fxMemberId,jdbcType=INTEGER},
+      `question_dan_id` = #{questionDanId,jdbcType=INTEGER},
+      `created_at` = #{createdAt,jdbcType=DATETIME},
+      `updated_at` = #{updatedAt,jdbcType=DATETIME}
+    where `question_online_id` = #{question_online_id,jdbcType=INT}
+  </update>
+</mapper>

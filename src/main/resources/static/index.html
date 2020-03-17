@@ -15,7 +15,7 @@
 <a href="/api/ws/sendOne?message=单发消息内容&id=1">单发消息链接</a>
 <a href="/api/ws/sendAll?message=群发消息内容">群发消息链接</a>
 <script type="text/javascript">
-    var socket = new WebSocket("ws://localhost:8080/ws/asset");
+    var socket = new WebSocket("ws://localhost:52320/ws?member_id=22&question_dan_id=474&type=225&fx_member_id=2525");
     if (typeof (WebSocket) == "undefined") {
         console.log("遗憾：您的浏览器不支持WebSocket");
     } else {
@@ -30,6 +30,13 @@
         socket.onopen = function () {
             console.log("Socket 已打开");
             socket.send("消息发送测试(From Client)");
+            var message = {
+                time: new Date(),
+                text: "Hello world!",
+                clientId: "asdfp8734rew"
+            };
+            socket.send(JSON.stringify(message));
+            alert("数据发送中...");
         };
         //收到消息事件
         socket.onmessage = function (msg) {

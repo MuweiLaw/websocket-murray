@@ -1,4 +1,4 @@
-package com.murray.websocketmurray.doman;
+package com.murray.websocketmurray.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@ServerEndpoint(value = "/ws/asset")
+@ServerEndpoint(value = "/ws")
 @Component
 public class WebSocketServer {
 
@@ -30,6 +32,8 @@ public class WebSocketServer {
      */
     @OnOpen
     public void onOpen(Session session) {
+        System.out.println(session.getRequestParameterMap().get("member_id").get(0));
+
         SessionSet.add(session);
         int cnt = OnlineCount.incrementAndGet(); // 在线数加1
         log.info("有连接加入，当前连接数为：{}", cnt);
@@ -40,7 +44,7 @@ public class WebSocketServer {
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose(Session session) {
+    public void onClose( Session session) {
         SessionSet.remove(session);
         int cnt = OnlineCount.decrementAndGet();
         log.info("有连接关闭，当前连接数为：{}", cnt);
